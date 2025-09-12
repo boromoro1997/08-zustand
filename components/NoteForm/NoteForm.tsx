@@ -37,13 +37,13 @@ interface NoteFormValues {
 export default function NoteForm() {
   const { draft, setDraft, clearDraft } = useNoteDraftStore();
   const router = useRouter();
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: createNote,
     onSuccess: () => {
       router.push('/notes/filter/All');
       clearDraft();
-      // queryClient.invalidateQueries({ queryKey: ['notes'] });
+      queryClient.invalidateQueries({ queryKey: ['notes'] });
     },
     onError: () => {
       toast.error('This is an error! Something went wrong , try again!');
