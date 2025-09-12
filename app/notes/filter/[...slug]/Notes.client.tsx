@@ -33,7 +33,7 @@ function NotesClient({ tag }: NotesClientProps) {
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox
-          searchQuerry={searchQuery}
+          searchQuery={searchQuery}
           onSearch={debouncedSearch} /// SUDA DEBAUNCE
         />
         {isSuccess && totalPages > 1 && (
