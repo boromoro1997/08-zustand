@@ -6,29 +6,34 @@ import {
 import NotesClient from './Notes.client';
 import fetchNotes from '@/lib/api';
 import { Tag } from '@/lib/constants';
+import { Metadata } from 'next';
 type Props = {
   params: Promise<{ slug: Tag[] }>;
 };
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const note = slug[0];
+  const tag: Tag | string = slug[0];
+
   return {
-    title: `Notes by filter ${note}`,
-    description: `Notes fit to the filter ${note}`,
+    title: `Notes - ${tag === 'All' ? 'All Tags' : tag}`,
+    description: `Browse notes tagged with ${
+      tag === 'All' ? 'all tags' : tag
+    }. NoteHub allows you to filter and view notes based on specific tags for better organization.`,
     openGraph: {
-      title: `Notes by filter ${note}`,
-      description: `Notes fit to the filter ${note}`,
-      url: `https://08-zustand-olive-ten.vercel.app/notes/filter/${note}`,
+      title: `Notes - ${tag === 'All' ? 'All Tags' : tag}`,
+      description: `Browse notes tagged with ${
+        tag === 'All' ? 'all tags' : tag
+      }. NoteHub allows you to filter and view notes based on specific tags for better organization.`,
+      url: `https://notehub.com/notes/filter/${tag}`,
       images: [
         {
           url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
           width: 1200,
           height: 630,
-          alt: 'logo',
+          alt: `Notes - ${tag === 'All' ? 'All Tags' : tag} | NoteHub`,
         },
       ],
-      type: 'website',
     },
   };
 }

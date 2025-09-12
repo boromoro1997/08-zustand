@@ -12,8 +12,8 @@ import { Toaster } from 'react-hot-toast';
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import Loader from '@/components/Loader/Loader';
 import { useDebouncedCallback } from 'use-debounce';
-import { useParams } from 'next/navigation';
 import { Tag } from '@/lib/constants';
+import Link from 'next/link';
 type NotesClientProps = {
   tag?: Tag;
 };
@@ -48,9 +48,12 @@ function NotesClient({ tag }: NotesClientProps) {
             setCurrentPage={setCurrentPage}
           />
         )}
-        <button className={css.button} onClick={openModal}>
+        {/* <button className={css.button} onClick={openModal}>
           Create note +
-        </button>
+        </button> */}
+        <Link className={css.button} href={'/notes/action/create'}>
+          Create note+
+        </Link>
       </header>
       {isError && <ErrorMessage />}
       {isLoading && <Loader />}
@@ -59,7 +62,7 @@ function NotesClient({ tag }: NotesClientProps) {
       )}
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} />
+          <NoteForm />
         </Modal>
       )}
       <Toaster />
